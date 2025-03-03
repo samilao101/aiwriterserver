@@ -373,6 +373,107 @@ app.post('/api/audio/transcriptions', upload.single('file'), async (req, res) =>
   }
 });
 
+// ScribeAI Support Route
+app.get('/support', (req, res) => {
+  res.send(`<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>ScribeAI Support</title>
+      <style>
+          body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open 
+  Sans', 'Helvetica Neue', sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
+          }
+          h1, h2 {
+              color: #2c3e50;
+          }
+          .contact-section {
+              background-color: #f8f9fa;
+              border-radius: 8px;
+              padding: 20px;
+              margin-bottom: 20px;
+          }
+          .faq-item {
+              margin-bottom: 20px;
+          }
+      </style>
+  </head>
+  <body>
+      <h1>ScribeAI Support</h1>
+
+      <div class="contact-section">
+          <h2>Contact Us</h2>
+          <p>If you need assistance with ScribeAI, please contact our support team at:</p>
+          <p><strong>Email:</strong> <a href="mailto:delacruz101@gmail.com">delacruz101@gmail.com</a></p>
+          <p>We aim to respond to all inquiries within 24-48 hours.</p>
+      </div>
+
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+          <h3>How do I create a new document?</h3>
+          <p>Tap the "+" button in the document library or select "New Document" from the menu to create a new
+  document.</p>
+      </div>
+
+      <div class="faq-item">
+          <h3>Can I use voice commands to write?</h3>
+          <p>Yes! Tap the microphone icon to activate voice-to-text functionality. You can dictate your content and
+  ScribeAI will transcribe it for you.</p>
+      </div>
+
+      <div class="faq-item">
+          <h3>How do I change paragraph styles?</h3>
+          <p>Select a paragraph and use the style selector to choose between title, section title, and body paragraph
+  formats.</p>
+      </div>
+
+      <div class="faq-item">
+          <h3>Can I export my documents?</h3>
+          <p>Yes, you can export your documents by tapping the share icon and selecting your preferred format.</p>
+      </div>
+
+      <h2>Troubleshooting</h2>
+
+      <div class="faq-item">
+          <h3>The app is running slowly</h3>
+          <p>Try closing other applications running in the background. If issues persist, restart your device.</p>
+      </div>
+
+      <div class="faq-item">
+          <h3>Content generation is not working</h3>
+          <p>
+              1. Check your internet connection<br>
+              2. Ensure your prompt is clear and specific<br>
+              3. Restart the app and try again
+          </p>
+      </div>
+
+      <div class="faq-item">
+          <h3>Documents are not saving</h3>
+          <p>
+              1. Check that you have sufficient storage space on your device<br>
+              2. Ensure you're connected to the internet if cloud sync is enabled<br>
+              3. Try saving with a different document name
+          </p>
+      </div>
+
+      <p>If your issue isn't addressed here, please contact us directly using the email address above.</p>
+
+      <footer>
+          <p>&copy; 2025 ScribeAI. All rights reserved.</p>
+      </footer>
+  </body>
+  </html>`);
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
