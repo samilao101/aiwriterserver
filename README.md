@@ -30,14 +30,19 @@ A Node.js server that securely proxies requests to the Groq API without exposing
 
 ## Testing
 
-A comprehensive test page is available at `/test`. This page provides:
-- Server status checks
-- Health endpoint testing
-- Chat API testing with different models
-- Detailed error reporting and diagnostics
-- Request/response inspection
+Two test pages are available to help diagnose issues:
 
-Simply visit https://aiwriterserver.vercel.app/test to diagnose any issues with your deployment.
+1. **Standard Test Page**: Available at `/test`
+   - Full-featured testing interface
+   - Toggles between local and Vercel deployment testing
+   - Detailed request/response inspection
+
+2. **Inline Test Page**: Available at `/inline-test` 
+   - Simplified testing interface embedded directly in the server
+   - No external file dependencies
+   - Guaranteed to work on all deployments
+
+Visit https://aiwriterserver.vercel.app/inline-test for the most reliable testing experience.
 
 ## Deployment
 
