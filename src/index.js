@@ -469,10 +469,22 @@ app.get('/', (req, res) => {
       <p>If your issue isn't addressed here, please contact us directly using the email address above.</p>
 
       <footer>
-          <p>&copy; 2025 AIBookScribe. All rights reserved.</p>
+          <p>&copy; 2025 AIBookScribe. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
       </footer>
   </body>
   </html>`);
+});
+
+// Privacy Policy Route
+app.get('/privacy', (req, res) => {
+  // Redirect to the TermsFeed hosted privacy policy
+  res.redirect('https://www.termsfeed.com/live/9f3834ec-bdaf-4ccf-8fa6-e96fbd6ad19f');
+});
+
+// Terms of Service Route
+app.get('/terms', (req, res) => {
+  // Redirect to Apple's Standard EULA
+  res.redirect('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/');
 });
 
 // Start server
