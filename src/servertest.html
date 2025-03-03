@@ -228,7 +228,7 @@
       
       try {
         const startTime = performance.now();
-        const response = await fetch(`${API_BASE_URL}/`, {
+        const response = await fetch(`${API_BASE_URL}/api/status`, {
           method: 'GET',
           mode: 'cors',
           cache: 'no-cache'

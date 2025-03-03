@@ -100,7 +100,7 @@ app.get('/inline-test', (req, res) => {
           result.textContent = 'Checking server status...';
           
           try {
-            const response = await fetch(API_BASE_URL + '/');
+            const response = await fetch(API_BASE_URL + '/api/status');
             if (response.ok) {
               const data = await response.json();
               result.innerHTML = '<span class="success">✓ Server is running</span>\\n' + JSON.stringify(data, null, 2);
@@ -181,7 +181,8 @@ if (!process.env.GROQ_API_KEY) {
 }
 
 // Routes
-app.get('/', (req, res) => {
+// Server status endpoint moved to /api/status
+app.get('/api/status', (req, res) => {
   res.json({ 
     status: 'Server is running', 
     version: '1.0.1',
@@ -235,7 +236,7 @@ app.get('/test', (req, res) => {
               async function testAPI() {
                 const result = document.getElementById('result');
                 try {
-                  const response = await fetch('/');
+                  const response = await fetch('/api/status');
                   const data = await response.json();
                   result.textContent = JSON.stringify(data, null, 2);
                 } catch (error) {
@@ -373,14 +374,14 @@ app.post('/api/audio/transcriptions', upload.single('file'), async (req, res) =>
   }
 });
 
-// ScribeAI Support Route
-app.get('/support', (req, res) => {
+// Root route with AIBookScribe support page
+app.get('/', (req, res) => {
   res.send(`<!DOCTYPE html>
   <html lang="en">
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>ScribeAI Support</title>
+      <title>AIBookScribe: Smart Writing Assistant</title>
       <style>
           body {
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open 
@@ -406,11 +407,11 @@ app.get('/support', (req, res) => {
       </style>
   </head>
   <body>
-      <h1>ScribeAI Support</h1>
+      <h1>AIBookScribe: Smart Writing Assistant</h1>
 
       <div class="contact-section">
           <h2>Contact Us</h2>
-          <p>If you need assistance with ScribeAI, please contact our support team at:</p>
+          <p>If you need assistance with AIBookScribe, please contact our support team at:</p>
           <p><strong>Email:</strong> <a href="mailto:delacruz101@gmail.com">delacruz101@gmail.com</a></p>
           <p>We aim to respond to all inquiries within 24-48 hours.</p>
       </div>
@@ -426,7 +427,7 @@ app.get('/support', (req, res) => {
       <div class="faq-item">
           <h3>Can I use voice commands to write?</h3>
           <p>Yes! Tap the microphone icon to activate voice-to-text functionality. You can dictate your content and
-  ScribeAI will transcribe it for you.</p>
+  AIBookScribe will transcribe it for you.</p>
       </div>
 
       <div class="faq-item">
@@ -468,7 +469,7 @@ app.get('/support', (req, res) => {
       <p>If your issue isn't addressed here, please contact us directly using the email address above.</p>
 
       <footer>
-          <p>&copy; 2025 ScribeAI. All rights reserved.</p>
+          <p>&copy; 2025 AIBookScribe. All rights reserved.</p>
       </footer>
   </body>
   </html>`);
