@@ -105,7 +105,7 @@
     document.getElementById('browser-info').textContent = navigator.userAgent;
 
     // Base URL - change this to test different environments
-    const API_BASE_URL = 'https://aiwriterserver.vercel.app';
+    const API_BASE_URL = window.location.origin; // Will use whatever server is hosting the page
     document.getElementById('request-url').textContent = `${API_BASE_URL}/api/chat`;
 
     // Format JSON with syntax highlighting
