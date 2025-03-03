@@ -411,9 +411,52 @@ app.get('/', (req, res) => {
 
       <div class="contact-section">
           <h2>Contact Us</h2>
-          <p>If you need assistance with AIBookScribe, please contact our support team at:</p>
-          <p><strong>Email:</strong> <a href="mailto:delacruz101@gmail.com">delacruz101@gmail.com</a></p>
-          <p>We aim to respond to all inquiries within 24-48 hours.</p>
+          <p>If you need assistance with AIBookScribe, please fill out the form below:</p>
+          <form id="contact-form" style="margin-top: 15px;">
+              <div style="margin-bottom: 15px;">
+                  <label for="contact-name" style="display: block; margin-bottom: 5px;">Name:</label>
+                  <input type="text" id="contact-name" name="name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+              </div>
+              <div style="margin-bottom: 15px;">
+                  <label for="contact-email" style="display: block; margin-bottom: 5px;">Email:</label>
+                  <input type="email" id="contact-email" name="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+              </div>
+              <div style="margin-bottom: 15px;">
+                  <label for="contact-subject" style="display: block; margin-bottom: 5px;">Subject:</label>
+                  <input type="text" id="contact-subject" name="subject" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+              </div>
+              <div style="margin-bottom: 15px;">
+                  <label for="contact-message" style="display: block; margin-bottom: 5px;">Message:</label>
+                  <textarea id="contact-message" name="message" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 120px;"></textarea>
+              </div>
+              <button type="submit" style="padding: 10px 15px; background-color: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
+          </form>
+          <div id="form-response" style="margin-top: 15px; display: none;"></div>
+          <script>
+              document.getElementById('contact-form').addEventListener('submit', function(e) {
+                  e.preventDefault();
+                  
+                  const responseDiv = document.getElementById('form-response');
+                  responseDiv.style.display = 'block';
+                  responseDiv.innerHTML = '<p style="color: green;">Thank you for your message! We will respond to <strong>' + 
+                      document.getElementById('contact-email').value + 
+                      '</strong> within 24-48 hours.</p>';
+                  
+                  // You would normally send this data to a server endpoint
+                  // For now, we'll just simulate a successful submission
+                  console.log({
+                      name: document.getElementById('contact-name').value,
+                      email: document.getElementById('contact-email').value,
+                      subject: document.getElementById('contact-subject').value,
+                      message: document.getElementById('contact-message').value,
+                      to: 'humberto@paiperapps.com'
+                  });
+                  
+                  // Reset the form
+                  this.reset();
+              });
+          </script>
+          <p style="margin-top: 15px; font-size: 0.9em; color: #666;">Alternatively, you can email us directly at <a href="mailto:humberto@paiperapps.com">humberto@paiperapps.com</a>. We aim to respond to all inquiries within 24-48 hours.</p>
       </div>
 
       <h2>Frequently Asked Questions</h2>
@@ -469,7 +512,7 @@ app.get('/', (req, res) => {
       <p>If your issue isn't addressed here, please contact us directly using the email address above.</p>
 
       <footer>
-          <p>&copy; 2025 AIBookScribe. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
+          <p>&copy; 2025 AIBookScribe by Paiper Apps. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
       </footer>
   </body>
   </html>`);
