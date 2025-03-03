@@ -30,14 +30,14 @@ A Node.js server that securely proxies requests to the Groq API without exposing
 
 ## Testing
 
-A comprehensive test page is available at `/src/servertest.html`. This HTML file provides:
+A comprehensive test page is available at `/test`. This page provides:
 - Server status checks
 - Health endpoint testing
 - Chat API testing with different models
 - Detailed error reporting and diagnostics
 - Request/response inspection
 
-Simply open this file in a browser or host it on any static file server to test your deployment.
+Simply visit https://aiwriterserver.vercel.app/test to diagnose any issues with your deployment.
 
 ## Deployment
 

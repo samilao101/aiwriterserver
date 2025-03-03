@@ -4,6 +4,7 @@ const cors = require('cors');
 const axios = require('axios');
 const multer = require('multer');
 const FormData = require('form-data');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,6 +51,11 @@ app.get('/health', (req, res) => {
       hasGroqKey: !!process.env.GROQ_API_KEY,
     }
   });
+});
+
+// Test page route
+app.get('/test', (req, res) => {
+  res.sendFile(path.join(__dirname, 'servertest.html'));
 });
 
 // Route for chat completions
