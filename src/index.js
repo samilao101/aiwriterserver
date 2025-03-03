@@ -433,27 +433,59 @@ app.get('/', (req, res) => {
           </form>
           <div id="form-response" style="margin-top: 15px; display: none;"></div>
           <script>
-              document.getElementById('contact-form').addEventListener('submit', function(e) {
+              document.getElementById('contact-form').addEventListener('submit', async function(e) {
                   e.preventDefault();
                   
                   const responseDiv = document.getElementById('form-response');
-                  responseDiv.style.display = 'block';
-                  responseDiv.innerHTML = '<p style="color: green;">Thank you for your message! We will respond to <strong>' + 
-                      document.getElementById('contact-email').value + 
-                      '</strong> within 24-48 hours.</p>';
+                  const submitButton = this.querySelector('button[type="submit"]');
                   
-                  // You would normally send this data to a server endpoint
-                  // For now, we'll just simulate a successful submission
-                  console.log({
+                  // Gather form data
+                  const formData = {
                       name: document.getElementById('contact-name').value,
                       email: document.getElementById('contact-email').value,
                       subject: document.getElementById('contact-subject').value,
-                      message: document.getElementById('contact-message').value,
-                      to: 'humberto@paiperapps.com'
-                  });
+                      message: document.getElementById('contact-message').value
+                  };
                   
-                  // Reset the form
-                  this.reset();
+                  // Disable submit button and show loading state
+                  submitButton.disabled = true;
+                  submitButton.innerHTML = 'Sending...';
+                  responseDiv.style.display = 'block';
+                  responseDiv.innerHTML = '<p>Sending your message...</p>';
+                  
+                  try {
+                      // Send data to server
+                      const response = await fetch('/api/contact', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify(formData)
+                      });
+                      
+                      const data = await response.json();
+                      
+                      if (response.ok) {
+                          // Success
+                          responseDiv.innerHTML = '<p style="color: green;">Thank you for your message! We will respond to <strong>' + 
+                              formData.email + '</strong> within 24-48 hours.</p>';
+                          
+                          // Reset the form
+                          this.reset();
+                      } else {
+                          // Server returned an error
+                          responseDiv.innerHTML = '<p style="color: red;">Error: ' + 
+                              (data.error || 'There was a problem submitting your message. Please try again.') + '</p>';
+                      }
+                  } catch (error) {
+                      // Network or other error
+                      console.error('Error submitting form:', error);
+                      responseDiv.innerHTML = '<p style="color: red;">Error: Unable to send your message. Please check your internet connection and try again.</p>';
+                  } finally {
+                      // Re-enable submit button
+                      submitButton.disabled = false;
+                      submitButton.innerHTML = 'Submit';
+                  }
               });
           </script>
           <p style="margin-top: 15px; font-size: 0.9em; color: #666;">Alternatively, you can email us directly at <a href="mailto:humberto@paiperapps.com">humberto@paiperapps.com</a>. We aim to respond to all inquiries within 24-48 hours.</p>
@@ -528,6 +560,54 @@ app.get('/privacy', (req, res) => {
 app.get('/terms', (req, res) => {
   // Redirect to Apple's Standard EULA
   res.redirect('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/');
+});
+
+// Contact form submission endpoint
+app.post('/api/contact', async (req, res) => {
+  try {
+    console.log('Received contact form submission:', req.body);
+    
+    // Validate required fields
+    const { name, email, subject, message } = req.body;
+    
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ 
+        error: 'Missing required fields. Please provide name, email, subject, and message.' 
+      });
+    }
+    
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Please provide a valid email address.' });
+    }
+    
+    // Here you would normally integrate with an email service like SendGrid, Mailgun, etc.
+    // For now, we'll just log the message details and return a success response
+    
+    const formSubmission = {
+      timestamp: new Date().toISOString(),
+      name,
+      email,
+      subject,
+      message,
+      to: 'humberto@paiperapps.com'
+    };
+    
+    console.log('Contact form submission details:', formSubmission);
+    
+    // Success response
+    res.status(200).json({ 
+      success: true, 
+      message: 'Thank you for your message. We will respond within 24-48 hours.' 
+    });
+    
+  } catch (error) {
+    console.error('Error processing contact form submission:', error);
+    res.status(500).json({ 
+      error: 'There was a problem submitting your message. Please try again later.'
+    });
+  }
 });
 
 // Start server
